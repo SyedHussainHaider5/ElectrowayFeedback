@@ -2,7 +2,6 @@ import 'package:feedback_module/pages/complaint_page.dart';
 import 'package:feedback_module/pages/feed_page.dart';
 import 'package:feedback_module/pages/privacy_policy_page.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'pages/post_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/New_Post_Page.dart';
@@ -23,7 +22,7 @@ class MyApp extends StatelessWidget {
           //primarySwatch: Colors.blueGrey,
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
-        "/": (context) => privacy_policy_page(),
+        "/": (context) => feed_Page(),
         "/post": (context) => New_Post_Page()
       },
     );
