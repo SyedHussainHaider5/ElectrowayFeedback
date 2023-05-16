@@ -15,7 +15,12 @@ class feed_Page extends StatelessWidget {
     [
       "Syed Hussain Haider Bukhari",
       "syedhussainhaider5@gmail.com",
-      "Helllo My name is Bukhari."
+      "Helllo My name is Bukharii."
+    ],
+    [
+      "Syed Hussain Haider Bukhari",
+      "syedhussainhaider5@gmail.com",
+      "Helllo My name is Bukharii."
     ]
   ];
 
