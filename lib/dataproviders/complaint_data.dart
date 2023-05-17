@@ -22,4 +22,25 @@ class Firestore_complaint {
 
     return cars;
   }
+
+  void createComplaint(text) async {
+    // Get a Firestore instance
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Get a reference to the "complaints" collection
+    CollectionReference complaintsRef = firestore.collection('complaints');
+
+    // Generate a new complaint ID
+    String complaintId = complaintsRef.doc().id;
+
+    // Create a new document with the complaint ID and other fields
+    await complaintsRef.doc(complaintId).set({
+      'complaint_id': complaintId,
+      'complaint_description': text,
+      'user_id': 'abc123',
+      'date': DateTime.now(),
+    });
+
+    print('Complaint added with ID: $complaintId');
+  }
 }

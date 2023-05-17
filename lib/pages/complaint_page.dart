@@ -27,6 +27,15 @@ class _complaint_pageState extends State<complaint_page> {
     });
   }
 
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  String getText() {
+    return _textController.text;
+  }
+
 //////////////////////////////////////////////////////////////
   @override
   Widget build(BuildContext context) {
@@ -141,6 +150,9 @@ class _complaint_pageState extends State<complaint_page> {
                 print('Error fetching cars: $error');
               });
               //////////////////////////
+              _isButtonEnabled
+                  ? Firestore_complaint().createComplaint(getText())
+                  : null;
             },
             child: Text("Send Complaint"),
             style: TextButton.styleFrom(minimumSize: Size(150, 40)),
