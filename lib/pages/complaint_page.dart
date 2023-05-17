@@ -1,3 +1,4 @@
+import 'package:feedback_module/dataproviders/complaint_data.dart';
 import 'package:flutter/material.dart';
 
 class complaint_page extends StatefulWidget {
@@ -130,6 +131,16 @@ class _complaint_pageState extends State<complaint_page> {
           ElevatedButton(
             onPressed: () {
               _ShowAlertMethod(context);
+              ////////checking firebase
+              Firestore_complaint().fetchCars().then((cars) {
+                cars.forEach((car) {
+                  print(
+                      'Brand: ${car['brand']}, Model: ${car['model']}, Company: ${car['company']}');
+                });
+              }).catchError((error) {
+                print('Error fetching cars: $error');
+              });
+              //////////////////////////
             },
             child: Text("Send Complaint"),
             style: TextButton.styleFrom(minimumSize: Size(150, 40)),

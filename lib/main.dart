@@ -6,9 +6,12 @@ import 'pages/post_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/New_Post_Page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
           //primarySwatch: Colors.blueGrey,
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
-        "/": (context) => feed_Page(),
+        "/": (context) => complaint_page(),
         "/post": (context) => New_Post_Page()
       },
     );
