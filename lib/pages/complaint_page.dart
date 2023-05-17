@@ -153,6 +153,7 @@ class _complaint_pageState extends State<complaint_page> {
               _isButtonEnabled
                   ? Firestore_complaint().createComplaint(getText())
                   : null;
+              _isButtonEnabled ? _textController.clear() : null;
             },
             child: Text("Send Complaint"),
             style: TextButton.styleFrom(minimumSize: Size(150, 40)),
