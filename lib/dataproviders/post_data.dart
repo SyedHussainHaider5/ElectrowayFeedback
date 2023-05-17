@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Firestore_post {
-  // static final firebase = FirebaseFirestore.instance;
-  // static final collection = firebase.collection("cars");
-
   Future<List<Map<String, dynamic>>> fetchPosts() async {
     // Get a Firestore instance
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -23,24 +20,27 @@ class Firestore_post {
     return posts;
   }
 
-  void createComplaint(text) async {
+  void createPost(text) async {
     // Get a Firestore instance
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // Get a reference to the "complaints" collection
-    CollectionReference complaintsRef = firestore.collection('complaints');
+    CollectionReference postsRef = firestore.collection('posts');
 
     // Generate a new complaint ID
-    String complaintId = complaintsRef.doc().id;
+    String postId = postsRef.doc().id;
 
     // Create a new document with the complaint ID and other fields
-    await complaintsRef.doc(complaintId).set({
-      'complaint_id': complaintId,
-      'complaint_description': text,
+    await postsRef.doc(postId).set({
+      'post_id': postId,
+      'post_description': text,
       'user_id': 'abc123',
       'date': DateTime.now(),
+      'likes': 12,
+      'username': 'Wadood Jamal',
+      'email_id': 'syedhussainhaider5@gmail.com'
     });
 
-    print('Complaint added with ID: $complaintId');
+    print('Complaint added with ID: $postId');
   }
 }

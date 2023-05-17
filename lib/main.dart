@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           //primarySwatch: Colors.blueGrey,
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
-        "/": (context) => complaint_page(),
+        "/": (context) => feed_Page(),
         "/post": (context) => New_Post_Page()
       },
     );

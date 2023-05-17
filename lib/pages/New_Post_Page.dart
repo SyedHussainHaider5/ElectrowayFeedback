@@ -1,7 +1,40 @@
+import "package:feedback_module/dataproviders/post_data.dart";
+import "package:feedback_module/pages/feed_page.dart";
 import "package:flutter/material.dart";
 
-class New_Post_Page extends StatelessWidget {
+class New_Post_Page extends StatefulWidget {
   const New_Post_Page({super.key});
+
+  @override
+  State<New_Post_Page> createState() => _New_Post_PageState();
+}
+
+bool _isButtonEnabled = false;
+
+class _New_Post_PageState extends State<New_Post_Page> {
+  TextEditingController _textController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _textController.addListener(_validateTextField);
+  }
+
+  void _validateTextField() {
+    setState(() {
+      _isButtonEnabled =
+          _textController.text.isNotEmpty && _textController.text.length > 5;
+    });
+  }
+
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  String getText() {
+    return _textController.text;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,12 +95,12 @@ class New_Post_Page extends StatelessWidget {
                     decoration: BoxDecoration(
                         border: Border.all(width: 1, color: Colors.black),
                         borderRadius: BorderRadius.all(Radius.circular(9))),
-                    child: const Card(
+                    child: Card(
                       child: TextField(
                         keyboardType: TextInputType.multiline,
                         minLines: 1, //Normal textInputField will be displayed
-                        maxLines: null,
-                        //maxLength: 100, // when user presses enter it will adapt to it
+                        maxLength: 400,
+                        controller: _textController,
                         decoration: InputDecoration(
                             hintText: "What's on your mind? write here..",
                             focusedBorder: InputBorder.none,
@@ -83,8 +116,14 @@ class New_Post_Page extends StatelessWidget {
                 height: 20,
               ),
               ElevatedButton(
-                onPressed: () {},
-                child: Text("Post"),
+                onPressed: () {
+                  _ShowAlertMethod(context);
+                  _isButtonEnabled
+                      ? Firestore_post().createPost(getText())
+                      : null;
+                  _isButtonEnabled ? _textController.clear() : null;
+                },
+                child: Text("Post Now!"),
                 style: TextButton.styleFrom(minimumSize: Size(150, 40)),
               )
             ],
@@ -94,4 +133,32 @@ class New_Post_Page extends StatelessWidget {
       drawer: Drawer(),
     );
   }
+}
+
+void _ShowAlertMethod(BuildContext context) {
+  var alert = AlertDialog(
+    title: _isButtonEnabled
+        ? Text('Posted!')
+        : Text('Please fill the post field properly!'),
+    content: _isButtonEnabled
+        ? Text("Dear user, your desired post is successfully posted!")
+        : null,
+    actions: <Widget>[
+      TextButton(
+        child: Text('OK'),
+        onPressed: () {
+          Navigator.of(context).pop();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => feed_Page()),
+          );
+        },
+      )
+    ],
+  );
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      });
 }

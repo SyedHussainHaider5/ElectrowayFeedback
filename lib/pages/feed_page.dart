@@ -1,8 +1,10 @@
 import "dart:ffi";
 
+import "package:feedback_module/pages/New_Post_Page.dart";
 import "package:feedback_module/widgets/post.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
+import "package:feedback_module/dataproviders/post_data.dart";
 
 class feed_Page extends StatefulWidget {
   feed_Page({super.key});
@@ -12,28 +14,46 @@ class feed_Page extends StatefulWidget {
 }
 
 class _feed_PageState extends State<feed_Page> {
-  final list = [
-    [
-      "Syed Hussain Haider Bukhari",
-      "syedhussainhaider5@gmail.com",
-      "Helllo My name is Bukhari."
-    ],
-    [
-      "Syed Hussain Haider Bukhari",
-      "syedhussainhaider5@gmail.com",
-      "Helllo My name is Bukharii."
-    ],
-    [
-      "Syed Hussain Haider Bukhari",
-      "syedhussainhaider5@gmail.com",
-      "Helllo My name is Bukharii."
-    ],
-    [
-      "Syed Hussain Haider Bukhari",
-      "syedhussainhaider5@gmail.com",
-      "Helllo My name is Bukharii."
-    ]
-  ];
+  // final list = [
+  //   [
+  //     "Syed Hussain Haider Bukhari",
+  //     "syedhussainhaider5@gmail.com",
+  //     "Helllo My name is Bukhari."
+  //   ],
+  //   [
+  //     "Syed Hussain Haider Bukhari",
+  //     "syedhussainhaider5@gmail.com",
+  //     "Helllo My name is Bukharii."
+  //   ],
+  //   [
+  //     "Syed Hussain Haider Bukhari",
+  //     "syedhussainhaider5@gmail.com",
+  //     "Helllo My name is Bukharii."
+  //   ],
+  //   [
+  //     "Syed Hussain Haider Bukhari",
+  //     "syedhussainhaider5@gmail.com",
+  //     "Helllo My name is Bukharii."
+  //   ]
+  // ];
+
+  final _posts = [];
+
+  void initState() {
+    super.initState();
+    Firestore_post().fetchPosts().then((posts) {
+      posts.forEach((post) {
+        _posts.add([
+          post['username'],
+          post['email_id'],
+          post['post_description'],
+          post['likes']
+        ]);
+      });
+    }).catchError((error) {
+      print('Error fetching cars: $error');
+    });
+  }
 
   bool _showFab = true;
 
@@ -81,7 +101,12 @@ class _feed_PageState extends State<feed_Page> {
           duration: duration,
           opacity: _showFab ? 1 : 0,
           child: FloatingActionButton.extended(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => New_Post_Page()),
+              );
+            },
             icon: Icon(Icons.add),
             label: Text("Create Post"),
           ),
@@ -128,12 +153,13 @@ class _feed_PageState extends State<feed_Page> {
           return true;
         },
         child: ListView.builder(
-            itemCount: list.length,
+            itemCount: _posts.length,
             itemBuilder: (context, index) {
               return post(
-                  username: list[index][0],
-                  email: list[index][1],
-                  text: list[index][2]);
+                  username: _posts[index][0],
+                  email: _posts[index][1],
+                  text: _posts[index][2],
+                  likes: _posts[index][3]);
             }),
       ),
       drawer: Drawer(),

@@ -7,12 +7,14 @@ class post extends StatelessWidget {
   final String username;
   final String email;
   final String text;
+  final int likes;
 
   const post(
       {super.key,
       required this.username,
       required this.email,
-      required this.text});
+      required this.text,
+      required this.likes});
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +51,11 @@ class post extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Syed Hussain Haider',
+                        username,
                         //style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       Text(
-                        'syedhussainhaider5@gmail.com',
+                        email,
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                       SizedBox(
@@ -96,7 +98,7 @@ class post extends StatelessWidget {
                   iconSize: 15.0,
                 ),
                 Text(
-                  "Like",
+                  "Like + $likes",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(width: 100),
