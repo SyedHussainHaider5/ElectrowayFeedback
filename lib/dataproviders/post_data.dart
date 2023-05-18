@@ -44,15 +44,39 @@ class Firestore_post {
     });
   }
 
-  Future<void> addValueToLikesField(
-      String documentId, dynamic valueToAdd) async {
+  Future<void> addValueToLikesField(String postId, dynamic valueToAdd) async {
     final CollectionReference collectionRef =
         FirebaseFirestore.instance.collection('posts');
-    final DocumentReference docRef = collectionRef.doc(documentId);
+    final DocumentReference docRef = collectionRef.doc(postId);
 
     // Update the array field with the new value
     await docRef.update({
       'likes': FieldValue.arrayUnion([valueToAdd]),
     });
+  }
+
+  Future<void> removeValueFromLikesField(
+      String postId, dynamic valueToRemove) async {
+    final CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection('posts');
+    final DocumentReference docRef = collectionRef.doc(postId);
+
+    // Update the array field by removing the value
+    await docRef.update({
+      'likes': FieldValue.arrayRemove([valueToRemove]),
+    });
+  }
+
+  Future<bool> checkIfLiked(String postId, String valueToCheck) async {
+    final DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection('posts').doc(postId).get();
+
+    final likes = snapshot.get('likes');
+
+    if (likes != null && likes.contains(valueToCheck)) {
+      return true;
+    }
+
+    return false;
   }
 }

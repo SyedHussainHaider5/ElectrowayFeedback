@@ -95,26 +95,24 @@ class post extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
-                  onPressed: () => {},
-                  icon: Icon(Icons.favorite),
-                  iconSize: 15.0,
-                  style: ButtonStyle(),
-                ),
-                Text(
-                  "Like + $likes",
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-                SizedBox(width: 100),
-                IconButtonContainer(icon: Icons.comment, onPressed: () {})
-                // IconButton(
-                //     onPressed: () => {},
-                //     icon: Icon(Icons.comment_bank),
-                //     iconSize: 15.0),
+                IconButtonContainer(
+                    text: "Like",
+                    icon: Icons.favorite,
+                    post_id: post_id,
+                    onPressed: () {}),
                 // Text(
-                //   "Comment",
+                //   "Like + $likes",
                 //   style: Theme.of(context).textTheme.bodySmall,
-                // )
+                // ),
+                SizedBox(width: 100),
+                IconButton(
+                    onPressed: () => {},
+                    icon: Icon(Icons.comment_bank),
+                    iconSize: 15.0),
+                Text(
+                  "Comment",
+                  style: Theme.of(context).textTheme.bodySmall,
+                )
               ],
             ),
             Divider(

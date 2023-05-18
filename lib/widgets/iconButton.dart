@@ -1,26 +1,73 @@
+import 'package:feedback_module/dataproviders/post_data.dart';
 import 'package:flutter/material.dart';
 
 class IconButtonContainer extends StatefulWidget {
+  final String text;
   final IconData icon;
   final VoidCallback onPressed;
+  final String post_id;
 
-  const IconButtonContainer({
-    Key? key,
-    required this.icon,
-    required this.onPressed,
-  }) : super(key: key);
+  const IconButtonContainer(
+      {Key? key,
+      required this.text,
+      required this.icon,
+      required this.onPressed,
+      required this.post_id})
+      : super(key: key);
 
   @override
   _IconButtonContainerState createState() => _IconButtonContainerState();
 }
 
 class _IconButtonContainerState extends State<IconButtonContainer> {
-  String text = 'Initial Text';
+  // String text = 'Like';
+  bool isliked = true;
+  Color iconColor = Colors.red;
+  // bool isliked = Firestore_post().checkIfLiked(post_id, "skdlskdlsd");
 
   void updateLikes() {
     setState(() {
-      text = 'New Text';
+      // text = 'New Text';
     });
+  }
+
+  void changeColor() {
+    setState(() {
+      isliked = !isliked;
+    });
+  }
+
+  void changeLike() {
+    setState(() {
+      if (isliked == false) {
+        Firestore_post().removeValueFromLikesField(widget.post_id, "123");
+      } else {
+        Firestore_post().addValueToLikesField(widget.post_id, "123");
+      }
+    });
+  }
+
+  bool functionExecuted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    executeOnce();
+  }
+
+  Future<void> executeOnce() async {
+    if (!functionExecuted) {
+      bool result = await runOnce();
+      setState(() {
+        functionExecuted = true;
+        isliked = result;
+        print(isliked);
+      });
+    }
+  }
+
+  Future<bool> runOnce() async {
+    return await Firestore_post().checkIfLiked(widget.post_id, "123");
   }
 
   @override
@@ -28,24 +75,28 @@ class _IconButtonContainerState extends State<IconButtonContainer> {
     return GestureDetector(
       onTap: () {
         widget.onPressed();
-        updateLikes();
+        changeColor();
+        changeLike();
+        //print(isliked);
+        // isliked = await Firestore_post().checkIfLiked(widget.post_id, "22");
+        // print(isliked);
       },
       child: Container(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Color.fromARGB(255, 246, 245, 245),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           children: [
             Icon(
               widget.icon,
-              color: Colors.red,
+              color: (isliked == true) ? Colors.red : Colors.grey,
               size: 15,
             ),
             SizedBox(width: 8.0),
             Text(
-              text,
+              widget.text + ' 2',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],

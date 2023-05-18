@@ -14,29 +14,6 @@ class feed_Page extends StatefulWidget {
 }
 
 class _feed_PageState extends State<feed_Page> {
-  // final list = [
-  //   [
-  //     "Syed Hussain Haider Bukhari",
-  //     "syedhussainhaider5@gmail.com",
-  //     "Helllo My name is Bukhari."
-  //   ],
-  //   [
-  //     "Syed Hussain Haider Bukhari",
-  //     "syedhussainhaider5@gmail.com",
-  //     "Helllo My name is Bukharii."
-  //   ],
-  //   [
-  //     "Syed Hussain Haider Bukhari",
-  //     "syedhussainhaider5@gmail.com",
-  //     "Helllo My name is Bukharii."
-  //   ],
-  //   [
-  //     "Syed Hussain Haider Bukhari",
-  //     "syedhussainhaider5@gmail.com",
-  //     "Helllo My name is Bukharii."
-  //   ]
-  // ];
-
   final _posts = [];
 
   void initState() {
