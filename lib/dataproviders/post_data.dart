@@ -9,7 +9,8 @@ class Firestore_post {
     CollectionReference postsRef = firestore.collection('posts');
 
     // Query the collection
-    QuerySnapshot querySnapshot = await postsRef.get();
+    QuerySnapshot querySnapshot =
+        await postsRef.orderBy('timestamp', descending: true).get();
 
     // Convert the query snapshot to a list of maps
     List<Map<String, dynamic>> posts = [];
@@ -36,11 +37,22 @@ class Firestore_post {
       'post_description': text,
       'user_id': 'abc123',
       'date': DateTime.now(),
-      'likes': 12,
+      'likes': [],
       'username': 'Wadood Jamal',
-      'email_id': 'syedhussainhaider5@gmail.com'
+      'email_id': 'syedhussainhaider5@gmail.com',
+      'timestamp': FieldValue.serverTimestamp(),
     });
+  }
 
-    print('Complaint added with ID: $postId');
+  Future<void> addValueToLikesField(
+      String documentId, dynamic valueToAdd) async {
+    final CollectionReference collectionRef =
+        FirebaseFirestore.instance.collection('posts');
+    final DocumentReference docRef = collectionRef.doc(documentId);
+
+    // Update the array field with the new value
+    await docRef.update({
+      'likes': FieldValue.arrayUnion([valueToAdd]),
+    });
   }
 }

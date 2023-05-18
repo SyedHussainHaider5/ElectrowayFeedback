@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:feedback_module/widgets/iconButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -8,13 +9,15 @@ class post extends StatelessWidget {
   final String email;
   final String text;
   final int likes;
+  final String post_id;
 
   const post(
       {super.key,
       required this.username,
       required this.email,
       required this.text,
-      required this.likes});
+      required this.likes,
+      required this.post_id});
 
   @override
   Widget build(BuildContext context) {
@@ -96,20 +99,22 @@ class post extends StatelessWidget {
                   onPressed: () => {},
                   icon: Icon(Icons.favorite),
                   iconSize: 15.0,
+                  style: ButtonStyle(),
                 ),
                 Text(
                   "Like + $likes",
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(width: 100),
-                IconButton(
-                    onPressed: () => {},
-                    icon: Icon(Icons.comment_bank),
-                    iconSize: 15.0),
-                Text(
-                  "Comment",
-                  style: Theme.of(context).textTheme.bodySmall,
-                )
+                IconButtonContainer(icon: Icons.comment, onPressed: () {})
+                // IconButton(
+                //     onPressed: () => {},
+                //     icon: Icon(Icons.comment_bank),
+                //     iconSize: 15.0),
+                // Text(
+                //   "Comment",
+                //   style: Theme.of(context).textTheme.bodySmall,
+                // )
               ],
             ),
             Divider(
