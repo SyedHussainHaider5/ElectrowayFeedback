@@ -21,7 +21,7 @@ class IconButtonContainer extends StatefulWidget {
 
 class _IconButtonContainerState extends State<IconButtonContainer> {
   // String text = 'Like';
-  bool isliked = true;
+  bool isliked = false;
   Color iconColor = Colors.red;
   // bool isliked = Firestore_post().checkIfLiked(post_id, "skdlskdlsd");
 
@@ -77,9 +77,6 @@ class _IconButtonContainerState extends State<IconButtonContainer> {
         widget.onPressed();
         changeColor();
         changeLike();
-        //print(isliked);
-        // isliked = await Firestore_post().checkIfLiked(widget.post_id, "22");
-        // print(isliked);
       },
       child: Container(
         padding: EdgeInsets.all(12.0),
