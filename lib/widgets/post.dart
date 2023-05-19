@@ -1,5 +1,5 @@
 import 'package:expandable/expandable.dart';
-import 'package:feedback_module/widgets/iconButton.dart';
+import 'package:feedback_module/widgets/likeButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -24,15 +24,6 @@ class post extends StatelessWidget {
     return Container(
       width: 300,
       alignment: Alignment.center,
-      // decoration: const BoxDecoration(
-      //   boxShadow: [
-      //     BoxShadow(
-      //       color: Color.fromARGB(255, 202, 213, 226),
-      //       spreadRadius: 2,
-      //       offset: Offset(0, 0),
-      //     ),
-      //   ],
-      // ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -95,11 +86,12 @@ class post extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButtonContainer(
-                    text: "Like",
-                    icon: Icons.favorite,
-                    post_id: post_id,
-                    onPressed: () {}),
+                LikeButtonContainer(
+                  text: "Like",
+                  icon: Icons.favorite,
+                  post_id: post_id,
+                  //onPressed: () {}
+                ),
                 // Text(
                 //   "Like + $likes",
                 //   style: Theme.of(context).textTheme.bodySmall,
