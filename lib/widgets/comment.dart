@@ -11,7 +11,7 @@ class comment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(2.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: Container(
         width: 300,
         decoration: BoxDecoration(
@@ -111,8 +111,17 @@ class comment extends StatelessWidget {
               //   indent: 20, //spacing at the start of divider
               //   endIndent: 20, //spacing at the end of divider
               // ),
-              SizedBox(
-                height: 10,
+              // SizedBox(
+              //   height: 10,
+              // ),
+              Container(
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                      onPressed: () => {},
+                      icon: Icon(Icons.delete),
+                      iconSize: 25.0),
+                ),
               ),
             ],
           ),

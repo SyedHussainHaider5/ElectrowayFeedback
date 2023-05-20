@@ -105,7 +105,8 @@ class _PostPageState extends State<PostPage> {
                       likes: widget.likes)
                   // child: addComment(onIncrement: () {}),
                   ),
-              SizedBox(
+              Container(
+                // color: Colors.grey,
                 height: 335,
                 child: ListView.builder(
                     shrinkWrap: true,

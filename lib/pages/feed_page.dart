@@ -43,7 +43,9 @@ class _feed_PageState extends State<feed_Page> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.blue,
         title: Text("All Posts"),
+        shadowColor: Colors.black,
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

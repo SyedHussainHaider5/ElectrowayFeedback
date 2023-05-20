@@ -79,13 +79,6 @@ class post extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            // Divider(
-            //   color: Colors.grey, //color of divider
-            //   height: 2, //height spacing of divider
-            //   thickness: 1, //thickness of divier line
-            //   indent: 20, //spacing at the start of divider
-            //   endIndent: 20, //spacing at the end of divider
-            // ),
             Container(
               // decoration: BoxDecoration(
               //     border: Border.all(width: 1, color: Colors.black),
@@ -98,7 +91,19 @@ class post extends StatelessWidget {
                     icon: Icons.favorite,
                     post_id: post_id,
                   ),
-                  SizedBox(width: 100),
+                  //SizedBox(width: 100),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 60),
+                    child: Container(
+                      color: Colors.grey,
+                      width: 0.5,
+                      height: 25,
+                    ),
+                  ),
+                  // VerticalDivider(
+                  //   color: Colors.black,
+                  //   thickness: 2,
+                  // ),
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -121,8 +126,8 @@ class post extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(
-                            Icons.comment,
-                            color: Colors.black,
+                            Icons.add_comment,
+                            color: Colors.grey,
                             size: 15,
                           ),
                           SizedBox(width: 8.0),
@@ -137,7 +142,6 @@ class post extends StatelessWidget {
                 ],
               ),
             ),
-
             SizedBox(
               height: 10,
             ),
