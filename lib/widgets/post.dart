@@ -22,11 +22,11 @@ class post extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300,
-      alignment: Alignment.center,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Container(
+        width: 300,
+        alignment: Alignment.center,
         child: Column(
           children: [
             Row(
@@ -67,39 +67,40 @@ class post extends StatelessWidget {
             ExpandablePanel(
               collapsed: Text(
                 text,
-                style: TextStyle(fontSize: 13),
+                // style: TextStyle(fontSize: 13),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               expanded: Text(
                 text,
-                style: TextStyle(fontSize: 13),
+                //style: TextStyle(fontSize: 13),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
-            Divider(
-              color: Colors.grey, //color of divider
-              height: 2, //height spacing of divider
-              thickness: 1, //thickness of divier line
-              indent: 20, //spacing at the start of divider
-              endIndent: 20, //spacing at the end of divider
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                LikeButtonContainer(
-                  text: "Like",
-                  icon: Icons.favorite,
-                  post_id: post_id,
-                  //onPressed: () {}
-                ),
-                // Text(
-                //   "Like + $likes",
-                //   style: Theme.of(context).textTheme.bodySmall,
-                // ),
-                SizedBox(width: 100),
-                IconButton(
-                    onPressed: () {
+            // Divider(
+            //   color: Colors.grey, //color of divider
+            //   height: 2, //height spacing of divider
+            //   thickness: 1, //thickness of divier line
+            //   indent: 20, //spacing at the start of divider
+            //   endIndent: 20, //spacing at the end of divider
+            // ),
+            Container(
+              // decoration: BoxDecoration(
+              //     border: Border.all(width: 1, color: Colors.black),
+              //     borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  LikeButtonContainer(
+                    text: "Like",
+                    icon: Icons.favorite,
+                    post_id: post_id,
+                  ),
+                  SizedBox(width: 100),
+                  GestureDetector(
+                    onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -111,23 +112,41 @@ class post extends StatelessWidget {
                                 likes: likes)),
                       );
                     },
-                    icon: Icon(Icons.comment_bank),
-                    iconSize: 15.0),
-                Text(
-                  "Comment",
-                  style: Theme.of(context).textTheme.bodySmall,
-                )
-              ],
+                    child: Container(
+                      padding: EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 246, 245, 245),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.comment,
+                            color: Colors.black,
+                            size: 15,
+                          ),
+                          SizedBox(width: 8.0),
+                          Text(
+                            "Comment",
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: 10,
             ),
             Divider(
               color: Colors.grey, //color of divider
               height: 2, //height spacing of divider
               thickness: 1, //thickness of divier line
-              indent: 20, //spacing at the start of divider
-              endIndent: 20, //spacing at the end of divider
-            ),
-            SizedBox(
-              height: 10,
+              indent: 0, //spacing at the start of divider
+              endIndent: 0, //spacing at the end of divider
             ),
           ],
         ),
