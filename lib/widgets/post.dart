@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:feedback_module/pages/post_page.dart';
 import 'package:feedback_module/widgets/likeButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -98,7 +99,18 @@ class post extends StatelessWidget {
                 // ),
                 SizedBox(width: 100),
                 IconButton(
-                    onPressed: () => {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PostPage(
+                                postId: post_id,
+                                username: username,
+                                email: email,
+                                text: text,
+                                likes: likes)),
+                      );
+                    },
                     icon: Icon(Icons.comment_bank),
                     iconSize: 15.0),
                 Text(

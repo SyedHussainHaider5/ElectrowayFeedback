@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
           //primarySwatch: Colors.blueGrey,
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
-        "/": (context) => PostPage(postId: 'f9E16Uc46jthPpcaIUqE'),
-        // "/": (context) => feed_Page(),
+        // "/": (context) => PostPage(postId: 'f9E16Uc46jthPpcaIUqE'),
+        "/": (context) => feed_Page(),
         "/post": (context) => New_Post_Page()
       },
     );
