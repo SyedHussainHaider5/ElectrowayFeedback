@@ -20,13 +20,15 @@ class _feed_PageState extends State<feed_Page> {
     super.initState();
     Firestore_post().fetchPosts().then((posts) {
       posts.forEach((post) {
-        _posts.add([
-          post['username'],
-          post['email_id'],
-          post['post_description'],
-          post['likes'],
-          post['post_id']
-        ]);
+        setState(() {
+          _posts.add([
+            post['username'],
+            post['email_id'],
+            post['post_description'],
+            post['likes'],
+            post['post_id']
+          ]);
+        });
       });
     }).catchError((error) {
       print('Error fetching cars: $error');

@@ -16,21 +16,19 @@ class _PostPageState extends State<PostPage> {
 
   void initState() {
     super.initState();
-    Firestore_post().fetchComments(widget.postId).then((posts) {
-      posts.forEach((post) async {
+    Firestore_post().fetchComments(widget.postId).then((posts) async {
+      for (final post in posts) {
         String? username = await Firestore_post()
             .fetchUsername(post.keys.toList()[0].toString());
-        // print(post.keys);
-        // print(post.values);
-        // print("hello");
-        comments.add([
-          username,
-          post.values,
-        ]);
-        print(comments[0]);
-      });
+        setState(() {
+          comments.add([
+            username,
+            post.values,
+          ]);
+        });
+      }
     }).catchError((error) {
-      print('Error fetching cars: $error');
+      print('Error fetching comments: $error');
     });
   }
 

@@ -39,7 +39,7 @@ class _LikeButtonContainerState extends State<LikeButtonContainer> {
       } else {
         Firestore_post().addValueToLikesField(widget.post_id, "123");
         Firestore_post().addComment(widget.post_id,
-            {"OWIUYldGNIef5xxLbuGibotYyuV2": "This is a comment3"});
+            {"OWIUYldGNIef5xxLbuGibotYyuV2": "This is a comment4"});
 
         likes++;
       }
