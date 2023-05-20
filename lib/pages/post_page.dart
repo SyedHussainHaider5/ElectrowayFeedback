@@ -25,6 +25,8 @@ class PostPage extends StatefulWidget {
   State<PostPage> createState() => _PostPageState();
 }
 
+bool _isCommentAdded = false;
+
 class _PostPageState extends State<PostPage> {
   final comments = [];
 
@@ -45,6 +47,19 @@ class _PostPageState extends State<PostPage> {
       print('Error fetching comments: $error');
     });
   }
+
+  void _commentAdded() {
+    setState(() {
+      _isCommentAdded = !_isCommentAdded;
+    });
+  }
+
+  // void _commentadder() {
+  //   setState(() {
+  //     Firestore_post()
+  //         .addComment(widget.postId, widget.); // Update the counter
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +96,15 @@ class _PostPageState extends State<PostPage> {
               //   "OWIUYldGNIef5xxLbuGibotYyuV2": "This is a comment6"
               // }),
               SizedBox(
-                height: 100,
-                child: addComment(postId: widget.postId, newValue: {
-                  "OWIUYldGNIef5xxLbuGibotYyuV2": "This is a comment6"
-                }),
-              ),
+                  height: 100,
+                  child: addComment(
+                      postId: widget.postId,
+                      username: widget.username,
+                      email: widget.email,
+                      text: widget.text,
+                      likes: widget.likes)
+                  // child: addComment(onIncrement: () {}),
+                  ),
               SizedBox(
                 height: 335,
                 child: ListView.builder(

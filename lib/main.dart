@@ -21,7 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //home: FeedPage(),
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
+
           //primarySwatch: Colors.blueGrey,
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
