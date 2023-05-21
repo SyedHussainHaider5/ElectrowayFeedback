@@ -2,6 +2,7 @@ import "dart:ffi";
 
 import "package:feedback_module/pages/New_Post_Page.dart";
 import "package:feedback_module/widgets/post.dart";
+import "package:feedback_module/widgets/postImage.dart";
 import "package:flutter/material.dart";
 import "package:flutter/rendering.dart";
 import "package:feedback_module/dataproviders/post_data.dart";
@@ -26,7 +27,8 @@ class _feed_PageState extends State<feed_Page> {
             post['email_id'],
             post['post_description'],
             post['likes'],
-            post['post_id']
+            post['post_id'],
+            post['image_url']
           ]);
         });
       });
@@ -109,12 +111,22 @@ class _feed_PageState extends State<feed_Page> {
         child: ListView.builder(
             itemCount: _posts.length,
             itemBuilder: (context, index) {
-              return post(
-                  username: _posts[index][0],
-                  email: _posts[index][1],
-                  text: _posts[index][2],
-                  likes: _posts[index][3].length,
-                  post_id: _posts[index][4]);
+              if (_posts[index][5] != "") {
+                return postImage(
+                    username: _posts[index][0],
+                    email: _posts[index][1],
+                    text: _posts[index][2],
+                    likes: _posts[index][3].length,
+                    post_id: _posts[index][4],
+                    ImageURL: _posts[index][5]);
+              } else {
+                return post(
+                    username: _posts[index][0],
+                    email: _posts[index][1],
+                    text: _posts[index][2],
+                    likes: _posts[index][3].length,
+                    post_id: _posts[index][4]);
+              }
             }),
       ),
       drawer: Drawer(),

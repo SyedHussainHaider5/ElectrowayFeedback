@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
         // "/": (context) => PostPage(postId: 'f9E16Uc46jthPpcaIUqE'),
-        "/": (context) => My_posts(),
+        "/": (context) => feed_Page(),
         "/post": (context) => New_Post_Page()
       },
     );

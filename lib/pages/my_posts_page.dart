@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../dataproviders/post_data.dart';
 import '../widgets/post.dart';
+import '../widgets/postImage.dart';
 import 'New_Post_Page.dart';
 
 class My_posts extends StatefulWidget {
@@ -111,7 +112,7 @@ class _My_postsState extends State<My_posts> {
         child: ListView.builder(
             itemCount: _posts.length,
             itemBuilder: (context, index) {
-              return postDelete(
+              return post(
                   username: _posts[index][0],
                   email: _posts[index][1],
                   text: _posts[index][2],

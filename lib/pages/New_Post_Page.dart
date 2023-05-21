@@ -1,6 +1,10 @@
+import "dart:io";
+
 import "package:feedback_module/dataproviders/post_data.dart";
 import "package:feedback_module/pages/feed_page.dart";
+import "package:firebase_storage/firebase_storage.dart";
 import "package:flutter/material.dart";
+import "package:image_picker/image_picker.dart";
 
 class New_Post_Page extends StatefulWidget {
   const New_Post_Page({super.key});
@@ -10,10 +14,13 @@ class New_Post_Page extends StatefulWidget {
 }
 
 bool _isButtonEnabled = false;
+String? imageurl = "";
+bool _photoUploaded = false;
+late File file;
+late String fileName;
+TextEditingController _textController = TextEditingController();
 
 class _New_Post_PageState extends State<New_Post_Page> {
-  TextEditingController _textController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
@@ -115,16 +122,89 @@ class _New_Post_PageState extends State<New_Post_Page> {
                 width: 10,
                 height: 20,
               ),
+              _photoUploaded
+                  ? Container(
+                      width: 60.0,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _photoUploaded = false;
+                            imageurl = "";
+                          });
+                        },
+                        icon: Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 32.0,
+                        ),
+                      ),
+                    )
+                  : ElevatedButton(
+                      onPressed: () async {
+                        final picker = ImagePicker();
+                        final pickedFile =
+                            await picker.pickImage(source: ImageSource.gallery);
+
+                        if (pickedFile != null) {
+                          file = File(pickedFile.path);
+                          fileName =
+                              DateTime.now().millisecondsSinceEpoch.toString();
+                        }
+                        setState(() {
+                          imageurl = fileName;
+                          if (imageurl == null) {
+                            _photoUploaded = false;
+                          } else {
+                            _photoUploaded = true;
+                          }
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 16.0),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.add, size: 20.0),
+                          SizedBox(width: 8.0),
+                          Text('Upload photo'),
+                        ],
+                      ),
+                    ),
+              SizedBox(
+                width: 10,
+                height: 20,
+              ),
               ElevatedButton(
                 onPressed: () {
                   _ShowAlertMethod(context);
                   _isButtonEnabled
-                      ? Firestore_post().createPost(getText())
+                      ? Firestore_post().createPost(getText(), imageurl)
                       : null;
-                  _isButtonEnabled ? _textController.clear() : null;
+                  if (_isButtonEnabled && imageurl != "") {
+                    Reference storageRef = FirebaseStorage.instance
+                        .ref()
+                        .child('photos/$fileName');
+                    UploadTask uploadTask = storageRef.putFile(file);
+                  }
+                  // _isButtonEnabled ? _textController.clear() : null;
+                  _isButtonEnabled
+                      ? setState(() {
+                          _photoUploaded = false;
+                        })
+                      : null;
                 },
                 child: Text("Post Now!"),
-                style: TextButton.styleFrom(minimumSize: Size(150, 40)),
+                style: TextButton.styleFrom(minimumSize: Size(300, 40)),
               )
             ],
           )),
@@ -148,10 +228,15 @@ void _ShowAlertMethod(BuildContext context) {
         child: Text('OK'),
         onPressed: () {
           Navigator.of(context).pop();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => feed_Page()),
-          );
+          if (_isButtonEnabled) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => feed_Page()),
+            );
+            _textController.clear();
+          } else {
+            _textController.clear();
+          }
         },
       )
     ],

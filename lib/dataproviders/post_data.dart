@@ -1,5 +1,8 @@
-import 'dart:ffi';
-
+// import 'dart:ffi';
+import 'dart:io';
+// import 'dart:html';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Firestore_post {
@@ -45,7 +48,7 @@ class Firestore_post {
     return posts;
   }
 
-  void createPost(text) async {
+  void createPost(text, imageUrl) async {
     // Get a Firestore instance
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -66,7 +69,30 @@ class Firestore_post {
       'username': 'Syed Hussain Haider',
       'email_id': 'syedhussainhaider5@gmail.com',
       'timestamp': FieldValue.serverTimestamp(),
+      'image_url': imageUrl
     });
+  }
+
+  // static Future<void> uploadPhoto(File? file, String? fileName) async {
+  //   await FirebaseStorage.instance.ref('Chargers/$fileName').putFile(file!);
+  // }
+
+  Future<String?> uploadPhoto() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      File file = File(pickedFile.path);
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      Reference storageRef =
+          FirebaseStorage.instance.ref().child('photos/$fileName');
+      UploadTask uploadTask = storageRef.putFile(file);
+      // TaskSnapshot storageSnapshot = await uploadTask;
+      // String downloadURL = await storageSnapshot.ref.getDownloadURL();
+      return fileName;
+    } else {
+      return null;
+    }
   }
 
   Future<void> deletePost(String postId) async {
