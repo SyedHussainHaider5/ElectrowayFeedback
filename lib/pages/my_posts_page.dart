@@ -1,24 +1,26 @@
-import "dart:ffi";
+import 'package:feedback_module/widgets/postDelete.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-import "package:feedback_module/pages/New_Post_Page.dart";
-import "package:feedback_module/widgets/post.dart";
-import "package:flutter/material.dart";
-import "package:flutter/rendering.dart";
-import "package:feedback_module/dataproviders/post_data.dart";
+import '../dataproviders/post_data.dart';
+import '../widgets/post.dart';
+import 'New_Post_Page.dart';
 
-class feed_Page extends StatefulWidget {
-  feed_Page({super.key});
+class My_posts extends StatefulWidget {
+  const My_posts({super.key});
 
   @override
-  State<feed_Page> createState() => _feed_PageState();
+  State<My_posts> createState() => _My_postsState();
 }
 
-class _feed_PageState extends State<feed_Page> {
+class _My_postsState extends State<My_posts> {
   final _posts = [];
 
   void initState() {
     super.initState();
-    Firestore_post().fetchPosts().then((posts) {
+    Firestore_post().MyPosts("abc786").then((posts) {
       posts.forEach((post) {
         setState(() {
           _posts.add([
@@ -44,7 +46,7 @@ class _feed_PageState extends State<feed_Page> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blue,
-        title: Text("All Posts"),
+        title: Text("My Posts"),
         shadowColor: Colors.black,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -109,7 +111,7 @@ class _feed_PageState extends State<feed_Page> {
         child: ListView.builder(
             itemCount: _posts.length,
             itemBuilder: (context, index) {
-              return post(
+              return postDelete(
                   username: _posts[index][0],
                   email: _posts[index][1],
                   text: _posts[index][2],

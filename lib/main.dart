@@ -1,5 +1,6 @@
 import 'package:feedback_module/pages/complaint_page.dart';
 import 'package:feedback_module/pages/feed_page.dart';
+import 'package:feedback_module/pages/my_posts_page.dart';
 import 'package:feedback_module/pages/privacy_policy_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'pages/post_page.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.lato().fontFamily),
       routes: {
         // "/": (context) => PostPage(postId: 'f9E16Uc46jthPpcaIUqE'),
-        "/": (context) => feed_Page(),
+        "/": (context) => My_posts(),
         "/post": (context) => New_Post_Page()
       },
     );

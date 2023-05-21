@@ -23,6 +23,28 @@ class Firestore_post {
     return posts;
   }
 
+  Future<List<Map<String, dynamic>>> MyPosts(String userId) async {
+    // Get a Firestore instance
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Get a reference to the collection
+    CollectionReference postsRef = firestore.collection('posts');
+
+    // Query the collection with the specified user_id
+    QuerySnapshot querySnapshot = await postsRef
+        .where('user_id', isEqualTo: userId)
+        //.orderBy('timestamp', descending: true)
+        .get();
+
+    // Convert the query snapshot to a list of maps
+    List<Map<String, dynamic>> posts = [];
+    querySnapshot.docs.forEach((doc) {
+      posts.add(doc.data() as Map<String, dynamic>);
+    });
+
+    return posts;
+  }
+
   void createPost(text) async {
     // Get a Firestore instance
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -37,14 +59,26 @@ class Firestore_post {
     await postsRef.doc(postId).set({
       'post_id': postId,
       'post_description': text,
-      'user_id': 'abc123',
+      'user_id': 'abc786',
       'date': DateTime.now(),
       'likes': [],
       'comments': [],
-      'username': 'Wadood Jamal',
+      'username': 'Syed Hussain Haider',
       'email_id': 'syedhussainhaider5@gmail.com',
       'timestamp': FieldValue.serverTimestamp(),
     });
+  }
+
+  Future<void> deletePost(String postId) async {
+    // Get a Firestore instance
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    // Get a reference to the collection and document
+    CollectionReference postsRef = firestore.collection('posts');
+    DocumentReference postDocRef = postsRef.doc(postId);
+
+    // Delete the document
+    await postDocRef.delete();
   }
 
   Future<void> addValueToLikesField(String postId, dynamic valueToAdd) async {
